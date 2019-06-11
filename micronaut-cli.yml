@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: net.tj.cp
+---
+testFramework: spock
+sourceLanguage: java
