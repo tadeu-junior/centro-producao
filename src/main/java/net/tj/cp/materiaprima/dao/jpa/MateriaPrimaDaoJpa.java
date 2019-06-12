@@ -9,22 +9,21 @@ import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
 
 import io.micronaut.configuration.hibernate.jpa.scope.CurrentSession;
-import io.micronaut.runtime.ApplicationConfiguration;
 import io.micronaut.spring.tx.annotation.Transactional;
-import net.tj.cp.materiaprima.dao.api.MateriaPrimaDAO;
+import net.tj.cp.materiaprima.dao.api.MateriaPrimaDao;
 import net.tj.cp.materiaprima.jpa.MateriaPrima;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Singleton
-public class MateriaPrimaDaoJPA implements MateriaPrimaDAO {
+public class MateriaPrimaDaoJpa implements MateriaPrimaDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public MateriaPrimaDaoJPA(@CurrentSession EntityManager entityManager) {
+	public MateriaPrimaDaoJpa(@CurrentSession EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 

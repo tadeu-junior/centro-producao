@@ -4,6 +4,7 @@ import java.net.URI;
 import javax.annotation.Nullable;
 import javax.validation.Valid;
 
+import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
@@ -11,7 +12,10 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.QueryValue;
+import net.tj.cp.funcionario.controller.FuncionarioController;
+import net.tj.cp.funcionario.jpa.Funcionario;
 import net.tj.cp.materiaprima.jpa.MateriaPrima;
 import net.tj.cp.materiaprima.service.api.MateriaPrimaService;
 import org.slf4j.Logger;
@@ -52,4 +56,13 @@ public class MateriaPrimaController {
 		materiaPrimaService.delete(id);
 		return HttpResponse.noContent();
 	}
+
+	@Put(value = MateriaPrimaController.MATERIAS_PRIMAS)
+	public HttpResponse update (@Body @Valid MateriaPrima materiaPrima){
+		materiaPrimaService.save(materiaPrima);
+		logger.info(materiaPrima.toString());
+		return HttpResponse.noContent().header(HttpHeaders.LOCATION, createLocation(materiaPrima).getPath());
+	}
+
+
 }

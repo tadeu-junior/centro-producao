@@ -1,19 +1,18 @@
 package net.tj.cp.materiaprima.service.impl;
 
-import java.util.List;
 import java.util.stream.Collectors;
 import javax.inject.Singleton;
 
-import net.tj.cp.materiaprima.dao.api.MateriaPrimaDAO;
+import net.tj.cp.materiaprima.dao.api.MateriaPrimaDao;
 import net.tj.cp.materiaprima.jpa.MateriaPrima;
 import net.tj.cp.materiaprima.service.api.MateriaPrimaService;
 
 @Singleton
 public class MateriaPrimaServiceImpl implements MateriaPrimaService {
 
-	private MateriaPrimaDAO materiaPrimaDAO;
+	private MateriaPrimaDao materiaPrimaDAO;
 
-	public MateriaPrimaServiceImpl(MateriaPrimaDAO materiaPrimaDAO){
+	public MateriaPrimaServiceImpl(MateriaPrimaDao materiaPrimaDAO){
 		this.materiaPrimaDAO = materiaPrimaDAO;
 	}
 

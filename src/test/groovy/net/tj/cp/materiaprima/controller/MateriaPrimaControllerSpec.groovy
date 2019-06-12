@@ -8,6 +8,8 @@ import io.micronaut.http.client.annotation.Client
 import io.micronaut.test.annotation.MicronautTest
 import net.tj.cp.Application
 import net.tj.cp.database.DataBaseApplication
+import net.tj.cp.funcionario.controller.FuncionarioController
+import net.tj.cp.funcionario.jpa.Funcionario
 import net.tj.cp.materiaprima.jpa.MateriaPrima
 import org.junit.jupiter.api.BeforeEach
 import spock.lang.Specification
@@ -58,6 +60,25 @@ class MateriaPrimaControllerSpec extends Specification{
     }
 
     @Unroll
+    void "atualiza materia prima"() {
+        given:
+        dataBaseApplication.truncateTable("MATERIA_PRIMA")
+        def materiaPrimaFermento = createMateriaPrima('Fermento (Tipo 1)',10)
+        def requestInclusao = HttpRequest.POST(MateriaPrimaController.MATERIAS_PRIMAS, materiaPrimaFermento)
+
+        when:
+        client.toBlocking().exchange(requestInclusao, MateriaPrima)
+        materiaPrimaFermento.setNome("Farinha")
+        def requestAlteracao = HttpRequest.PUT(MateriaPrimaController.MATERIAS_PRIMAS, materiaPrimaFermento)
+        def responseUpdate = client.toBlocking().exchange(requestAlteracao, MateriaPrima)
+
+        then:
+        HttpStatus.NO_CONTENT == responseUpdate.getStatus()
+        MateriaPrimaController.MATERIAS_PRIMAS+'/3' == responseUpdate.header(HttpHeaders.LOCATION)
+    }
+
+
+    @Unroll
     void "lista materia prima sem filtro"() {
         given:
         dataBaseApplication.truncateTable("MATERIA_PRIMA")
@@ -70,8 +91,8 @@ class MateriaPrimaControllerSpec extends Specification{
         def lista = client.toBlocking().retrieve(HttpRequest.GET(MateriaPrimaController.MATERIAS_PRIMAS),String)
 
         then:
-        def listaTeste = '2 - Fermento (Tipo 1) - Quantidade: 10\n' +
-                '3 - Açucar - Quantidade: 4'
+        def listaTeste = '4 - Fermento (Tipo 1) - Quantidade: 10\n' +
+                '5 - Açucar - Quantidade: 4'
         listaTeste == lista
     }
 
@@ -88,7 +109,7 @@ class MateriaPrimaControllerSpec extends Specification{
         def lista = client.toBlocking().retrieve(HttpRequest.GET(MateriaPrimaController.MATERIAS_PRIMAS+"?limiteMinimo=5"),String)
 
         then:
-        def listaTeste = '5 - Açucar - Quantidade: 4'
+        def listaTeste = '7 - Açucar - Quantidade: 4'
         listaTeste == lista
     }
 

@@ -16,6 +16,7 @@ jpa:
   default:
     packages-to-scan:
       - 'net.tj.cp.materiaprima.jpa'
+      - 'net.tj.cp.funcionario.jpa'
     properties:
       hibernate:
         hbm2ddl:

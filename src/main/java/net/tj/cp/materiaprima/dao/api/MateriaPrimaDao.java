@@ -1,15 +1,13 @@
 package net.tj.cp.materiaprima.dao.api;
 
 import java.util.List;
-
 import javax.inject.Singleton;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import net.tj.cp.materiaprima.jpa.MateriaPrima;
 
 @Singleton
-public interface MateriaPrimaDAO {
+public interface MateriaPrimaDao {
 
 	void save(@NotNull MateriaPrima materiaPrima);
 
